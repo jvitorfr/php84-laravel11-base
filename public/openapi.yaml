@@ -1,0 +1,14 @@
+openapi: 3.0.0
+info:
+  title: 'Meu API'
+  description: 'Documentação da API do meu aplicativo'
+  version: 1.0.0
+paths:
+  /test:
+    get:
+      summary: 'mostra pros curiosos que o bagulho funciona'
+      description: 'Retorna os dados em formato JSON.'
+      operationId: 7e4cbd87f862955499cc9fb93a25b372
+      responses:
+        '200':
+          description: 'Dados retornados com sucesso'
