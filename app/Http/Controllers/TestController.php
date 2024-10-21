@@ -31,4 +31,24 @@ class TestController extends Controller
         
         return response()->json($data);
     }
+    
+    
+    /**
+     * @OA\PathItem(
+     *     path="/test-pre-commit",
+     *     @OA\Get(
+     *         summary="mostra pros curiosos o pre-commit",
+     *         description="Retorna os dados em formato JSON.",
+     *         @OA\Response(response="200", description="Dados retornados com sucesso")
+     *     ),
+     * )
+     */
+    public function testPreCommit(): JsonResponse
+    {
+        $data = [
+            'message' => 'Dados retornados com sucesso'
+        ];
+        
+        return response()->json($data);
+    }
 }
