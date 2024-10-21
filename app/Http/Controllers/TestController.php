@@ -28,11 +28,11 @@ class TestController extends Controller
         $data = [
             'message' => 'Dados retornados com sucesso'
         ];
-        
+
         return response()->json($data);
     }
-    
-    
+
+
     /**
      * @OA\PathItem(
      *     path="/test-pre-commit",
@@ -48,7 +48,7 @@ class TestController extends Controller
         $data = [
             'message' => 'Dados retornados com sucesso'
         ];
-        
+
         return response()->json($data);
     }
 }

@@ -8,6 +8,8 @@
 /vendor
 .env
 .docker
+tools
+.php-cs-fixer.cache
 .env.backup
 .env.production
 .phpactor.json
