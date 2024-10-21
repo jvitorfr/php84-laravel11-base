@@ -1,0 +1,73 @@
+version: "3.7"
+services:
+  laravel_8:
+    build:
+      args:
+        user: joao
+        uid: 1000
+      context: ./
+      dockerfile: Dockerfile
+    image: laravel-app
+    restart: unless-stopped
+    working_dir: /var/www/
+    volumes:
+      - ./:/var/www
+    depends_on:
+      - redis
+#      - queue
+    networks:
+      - laravel-eti
+
+  nginx:
+    image: nginx:alpine
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    volumes:
+      - ./:/var/www
+      - ./docker/nginx/:/etc/nginx/conf.d/
+    networks:
+      - laravel-eti
+    depends_on:
+      - laravel_8
+
+  mysql:
+    image: 'mysql:8.0'
+    restart: unless-stopped
+    volumes:
+      - ./.docker/mysql/dbdata:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+    ports:
+      - '3307:3306'
+    networks:
+      - laravel-eti
+
+#  queue:
+#    build:
+#      args:
+#        user: joao
+#        uid: 1000
+#      context: ./
+#      dockerfile: Dockerfile
+#    restart: unless-stopped
+#    command: "php artisan queue:work"
+#    volumes:
+#      - ./:/var/www
+#    depends_on:
+#      - redis
+#    networks:
+#      - laravel-eti
+
+  redis:
+    image: redis:latest
+    networks:
+      - laravel-eti
+
+networks:
+  laravel-eti:
+    driver: bridge
