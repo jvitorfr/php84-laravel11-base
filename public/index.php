@@ -6,8 +6,8 @@ use OpenApi\Generator;
 define('LARAVEL_START', microtime(true));
 
 
-error_reporting(E_ALL & ~E_DEPRECATED & ~E_STRICT);
-
+//error_reporting(E_ALL & ~E_DEPRECATED & ~E_STRICT);
+error_reporting(0);
 
 // Determine if the application is in maintenance mode...
 if (file_exists($maintenance = __DIR__.'/../storage/framework/maintenance.php')) {

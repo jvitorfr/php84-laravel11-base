@@ -12,3 +12,11 @@ paths:
       responses:
         '200':
           description: 'Dados retornados com sucesso'
+  /test-pre-commit:
+    get:
+      summary: 'mostra pros curiosos o pre-commit'
+      description: 'Retorna os dados em formato JSON.'
+      operationId: 6132ec222c5d6ad71f66ad2f583a1ffd
+      responses:
+        '200':
+          description: 'Dados retornados com sucesso'
