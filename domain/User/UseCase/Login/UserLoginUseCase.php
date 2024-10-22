@@ -16,7 +16,7 @@ class UserLoginUseCase implements UseCaseInterface
     public function __construct()
     {
     }
-    
+
     /**
      * Execute the use case for user login.
      *
@@ -32,7 +32,7 @@ class UserLoginUseCase implements UseCaseInterface
         }
 
         $loginParams = $params[0];
-        
+
         if (!Auth::attempt(['email' => $loginParams->email, 'password' => $loginParams->password])) {
             throw new UnauthorizedHttpException("wrong email or password", 'wrong email or password');
         }

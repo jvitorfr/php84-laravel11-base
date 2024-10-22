@@ -80,4 +80,10 @@ paths:
           description: Unauthorised.
         '500':
           description: 'Internal Server Error.'
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      bearerFormat: JWT
+      scheme: bearer
 tags: []

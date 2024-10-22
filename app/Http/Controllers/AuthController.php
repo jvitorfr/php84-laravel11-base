@@ -14,7 +14,11 @@ use InvalidArgumentException;
 use Throwable;
 
 /**
- * @OA\Info(title="API Title", version="1.0")
+ * @OA\Info(
+ *     title="Laravel Swagger Base Project",
+ *     version="1.0.0",
+ *     description="Documentação da API do meu aplicativo"
+ * )
  *
  * @OA\SecurityScheme(
  *     type="http",
@@ -22,9 +26,7 @@ use Throwable;
  *     scheme="bearer",
  *     bearerFormat="JWT"
  * )
- */
-
-/**
+ *
  * @OA\Tag(
  *     name="Auth Management",
  *     description="APIs related to user auth interactions"
@@ -136,7 +138,7 @@ class AuthController extends BaseController
         } catch (ValidationException | InvalidArgumentException $exception) {
             return $this->sendError('Validation Error.', $exception->validator->errors(), 422);
         } catch (UnauthorizedHttpException $exception) {
-            return $this->sendError($exception->getMessage(),  [$exception->getMessage()],401);
+            return $this->sendError($exception->getMessage(), [$exception->getMessage()], 401);
         } catch (Throwable $throwable) {
             return $this->sendError('An error occurred while trying to login.', [$throwable->getMessage()], 500);
         }

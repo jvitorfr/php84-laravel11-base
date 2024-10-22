@@ -4,13 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\JsonResponse;
 
-/**
- * @OA\Info(
- *     title="Laravel Swagger Base Project",
- *     version="1.0.0",
- *     description="Documentação da API do meu aplicativo"
- * )
- */
 class TestController extends BaseController
 {
     /**
