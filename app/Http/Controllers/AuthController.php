@@ -23,7 +23,7 @@ class AuthController extends BaseController
     /**
      * @OA\Post(
      *     path="/api/register",
-     *     summary="Registro de usuário",
+     *     summary="Registro de usuário.",
      *     description="Registro necessária para consumo de nossos serviços",
      *     @OA\RequestBody(
      *         required=true,
