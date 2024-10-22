@@ -22,7 +22,7 @@ class AuthController extends BaseController
 
     /**
      * @OA\Post(
-     *     path="/register",
+     *     path="/api/register",
      *     summary="Registro de usuário",
      *     description="Registro necessária para consumo de nossos serviços",
      *     @OA\RequestBody(
@@ -40,12 +40,14 @@ class AuthController extends BaseController
      *         )
      *     ),
      *     @OA\Response(response="200", description="User register successfully."),
-     *     @OA\Response(response="400", description="Validation Error.")
+     *     @OA\Response(response="400", description="Validation Error."),
+     *     @OA\Response(response="500", description="Internal Server Error.")
      * )
      */
     public function register(Request $request): JsonResponse
     {
         try {
+            dd($request);
             $validator = Validator::make($request->all(), [
                 'name' => 'required|string|max:255',
                 'email' => 'required|email|unique:users,email',
@@ -72,7 +74,7 @@ class AuthController extends BaseController
 
     /**
      * @OA\Post(
-     *     path="/login",
+     *     path="/api/login",
      *     summary="Login de usuário",
      *     description="Autenticação necessária para consumo de nossos serviços",
      *     @OA\RequestBody(
