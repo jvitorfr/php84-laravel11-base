@@ -1,14 +1,14 @@
 openapi: 3.0.0
 info:
-  title: 'Auth Context'
-  description: Autenticação
+  title: 'Test Context'
+  description: 'Documentação da API do meu aplicativo'
   version: 1.0.0
 paths:
   /register:
-    get:
+    post:
       summary: 'Registro de usuário'
       description: 'Registro necessária para consumo de nossos serviços'
-      operationId: 5a6235ceb130ee98f304e5ca0a48718f
+      operationId: 7169e2b01b06d3afa594a11ab6422148
       responses:
         '200':
           description: 'User register successfully.'
