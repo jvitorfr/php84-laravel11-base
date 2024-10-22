@@ -16,15 +16,13 @@ class BaseController extends Controller
      */
     public function sendResponse(array $result, string $message): JsonResponse
     {
-        $response = [
+        return response()->json([
             'success' => true,
             'data'    => $result,
             'message' => $message,
-        ];
-
-        return response()->json($response, 200);
+        ], 200);
     }
-    
+
     /**
      * return error response.
      *
