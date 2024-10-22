@@ -13,13 +13,13 @@ class AuthController extends BaseController
 {
     public RegisterUserUseCase $registerUserUseCase;
     public UserLoginUseCase $userLoginUseCase;
-    
+
     public function __construct(RegisterUserUseCase $registerUserUseCase, UserLoginUseCase $userLoginUseCase)
     {
         $this->registerUserUseCase = $registerUserUseCase;
         $this->userLoginUseCase = $userLoginUseCase;
     }
-    
+
     /**
      * @OA\Post(
      *     path="/register",
@@ -51,17 +51,17 @@ class AuthController extends BaseController
                 'email' => 'required|email|unique:users,email',
                 'password' => 'required|string|min:8|confirmed',
             ]);
-            
+
             if ($validator->fails()) {
                 throw new ValidationException($validator);
             }
-            
+
             $domainResponse = $this->registerUserUseCase->execute(
                 $request->get('name'),
                 $request->get('email'),
                 $request->get('password')
             );
-            
+
             return $domainResponse->successResponse();
         } catch (ValidationException $exception) {
             return $this->sendError('Validation Error.', $exception->validator->errors(), 422);
@@ -69,7 +69,7 @@ class AuthController extends BaseController
             return $this->sendError('An error occurred while registering the user.', [$throwable->getMessage()], 500);
         }
     }
-    
+
     /**
      * @OA\Post(
      *     path="/login",
@@ -98,23 +98,22 @@ class AuthController extends BaseController
                 'email' => 'required|email|unique:users,email',
                 'password' => 'required|string|min:8|confirmed',
             ]);
-            
+
             if ($validator->fails()) {
                 throw new ValidationException($validator);
             }
-            
+
             $domainResponse = $this->userLoginUseCase->execute(
                 $request->get('email'),
                 $request->get('password')
             );
-            
+
             return $domainResponse->successResponse();
         } catch (ValidationException | InvalidArgumentException $exception) {
             return $this->sendError('Validation Error.', $exception->validator->errors(), 422);
-        }
-        catch (Throwable $throwable) {
+        } catch (Throwable $throwable) {
             return $this->sendError('An error occurred while trying login.', [$throwable->getMessage()], 500);
         }
-        
+
     }
 }

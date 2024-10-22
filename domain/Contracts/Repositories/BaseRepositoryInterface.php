@@ -18,7 +18,7 @@ interface BaseRepositoryInterface
      * @return Collection<int, TModel>
      */
     public function all(): Collection;
-    
+
     /**
      * Find a record by its primary key.
      *
@@ -28,7 +28,7 @@ interface BaseRepositoryInterface
      * @throws ModelNotFoundException
      */
     public function find(int|string $id): Model;
-    
+
     /**
      * Create a new record in the model.
      *
@@ -36,7 +36,7 @@ interface BaseRepositoryInterface
      * @return TModel
      */
     public function create(array $data): Model;
-    
+
     /**
      * Update a record in the model.
      *
@@ -45,7 +45,7 @@ interface BaseRepositoryInterface
      * @return TModel
      */
     public function update(int|string $id, array $data): Model;
-    
+
     /**
      * Delete a record from the model.
      *

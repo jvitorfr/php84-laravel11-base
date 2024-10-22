@@ -12,12 +12,12 @@ use Illuminate\Database\Eloquent\{Collection, Model};
 class BaseRepository implements BaseRepositoryInterface
 {
     protected Model $model;
-    
+
     public function __construct(Model $model)
     {
         $this->model = $model;
     }
-    
+
     /**
      * Get all records from the model.
      *
@@ -29,7 +29,7 @@ class BaseRepository implements BaseRepositoryInterface
         $collection = $this->model::all();
         return $collection;
     }
-    
+
     /**
      * Find a record by its primary key.
      *
@@ -44,7 +44,7 @@ class BaseRepository implements BaseRepositoryInterface
         $model = $this->model->findOrFail($id);
         return $model;
     }
-    
+
     /**
      * Create a new record in the model.
      *
@@ -57,7 +57,7 @@ class BaseRepository implements BaseRepositoryInterface
         $model = $this->model->create($data);
         return $model;
     }
-    
+
     /**
      * Update a record in the model.
      *
@@ -69,10 +69,10 @@ class BaseRepository implements BaseRepositoryInterface
     {
         $model = $this->find($id);
         $model->update($data);
-        
+
         return $model;
     }
-    
+
     /**
      * Delete a record from the model.
      *

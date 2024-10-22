@@ -1,4 +1,5 @@
 <?php
+
 namespace Domain\User\Repositories;
 
 use Domain\BaseRepository;
@@ -10,5 +11,5 @@ class UserRepository extends BaseRepository
     {
         parent::__construct($user);
     }
-    
+
 }
