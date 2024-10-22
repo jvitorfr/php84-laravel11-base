@@ -14,8 +14,8 @@ Route::get('/', function () {
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);
 
-Route::get('/test', [TestController::class, 'index']);
-Route::get('/test-pre-commit', [TestController::class, 'testPreCommit']);
+//Route::get('/test', [TestController::class, 'index']);
+//Route::get('/test-pre-commit', [TestController::class, 'testPreCommit']);
 
 
 
