@@ -5,20 +5,24 @@ namespace Domain\User\UseCase\Login;
 use Domain\Contracts\UseCaseInterface;
 use Domain\DomainResponse;
 use Domain\User\Models\User;
+use Exception;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\ValidationException;
 use InvalidArgumentException;
+use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
 class UserLoginUseCase implements UseCaseInterface
 {
     public function __construct()
     {
     }
-
+    
     /**
      * Execute the use case for user login.
      *
      * @param LoginUserParams $params
      * @return DomainResponse
+     * @throws Exception
      */
     public function execute(...$params): DomainResponse
     {
@@ -28,9 +32,9 @@ class UserLoginUseCase implements UseCaseInterface
         }
 
         $loginParams = $params[0];
-
+        
         if (!Auth::attempt(['email' => $loginParams->email, 'password' => $loginParams->password])) {
-            return new DomainResponse(false, [], 'Login Error');
+            throw new UnauthorizedHttpException("wrong email or password", 'wrong email or password');
         }
 
         /** @var User $user */

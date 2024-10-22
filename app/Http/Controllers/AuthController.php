@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 use Domain\User\{UseCase\Login\LoginUserParams,
     UseCase\Login\UserLoginUseCase,
     UseCase\Register\RegisterUserParams,
@@ -134,6 +135,8 @@ class AuthController extends BaseController
             return $domainResponse->successResponse();
         } catch (ValidationException | InvalidArgumentException $exception) {
             return $this->sendError('Validation Error.', $exception->validator->errors(), 422);
+        } catch (UnauthorizedHttpException $exception) {
+            return $this->sendError($exception->getMessage(),  [$exception->getMessage()],401);
         } catch (Throwable $throwable) {
             return $this->sendError('An error occurred while trying to login.', [$throwable->getMessage()], 500);
         }
