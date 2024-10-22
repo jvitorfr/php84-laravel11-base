@@ -37,7 +37,7 @@ class TestController extends Controller
      * @OA\PathItem(
      *     path="/test-pre-commit",
      *     @OA\Get(
-     *         summary="mostra pros curiosos o pre-commit",
+     *         summary="está funcionando o pre commit",
      *         description="Retorna os dados em formato JSON.",
      *         @OA\Response(response="200", description="Dados retornados com sucesso")
      *     ),
