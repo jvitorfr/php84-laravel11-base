@@ -10,7 +10,7 @@ class BaseController extends Controller
     /**
      * success response method.
      *
-     * @param array $result
+     * @param string[] $result
      * @param string $message
      * @return JsonResponse
      */
