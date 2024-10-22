@@ -4,27 +4,13 @@ info:
   description: 'Documentação da API do meu aplicativo'
   version: 1.0.0
 paths:
-  /api/test:
-    get:
-      summary: 'mostra pros curiosos que o bagulho funciona'
-      description: 'Retorna os dados em formato JSON.'
-      operationId: 7e4cbd87f862955499cc9fb93a25b372
-      responses:
-        '200':
-          description: 'Dados retornados com sucesso'
-  /api/test-pre-commit:
-    get:
-      summary: 'está funcionando o pre commit'
-      description: 'Retorna os dados em formato JSON.'
-      operationId: 6132ec222c5d6ad71f66ad2f583a1ffd
-      responses:
-        '200':
-          description: 'Dados retornados com sucesso'
-  /api/register:
+  /auth/register:
     post:
+      tags:
+        - 'Auth Management'
       summary: 'Registro de usuário.'
       description: 'Registro necessário para consumo de nossos serviços'
-      operationId: 8a56853624e025573120a09a4c75d468
+      operationId: ed42f392010c301892e640067141676e
       requestBody:
         required: true
         content:
@@ -53,11 +39,13 @@ paths:
           description: 'Validation Error.'
         '500':
           description: 'Internal Server Error.'
-  /api/login:
+  /auth/login:
     post:
+      tags:
+        - 'Auth Management'
       summary: 'Login de usuário'
       description: 'Autenticação necessária para consumo de nossos serviços'
-      operationId: a3b306d14572d1f4bd6c064b3233e7b8
+      operationId: 8cb7742ae98d0990acb2907c4e00bf24
       requestBody:
         required: true
         content:
@@ -77,13 +65,50 @@ paths:
         '200':
           description: 'User login successfully.'
         '401':
-          description: Unauthorised.
+          description: Unauthorized.
         '500':
           description: 'Internal Server Error.'
+  /auth/me:
+    get:
+      tags:
+        - 'Auth Management'
+      summary: 'Obter o usuário autenticado atual'
+      operationId: a9c495788506b114956e3f509e5d90a2
+      responses:
+        '200':
+          description: 'Usuário recuperado com sucesso'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '401':
+          description: 'Não autenticado'
 components:
+  schemas:
+    User:
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: 'João Vitor Felipe'
+        email:
+          type: string
+          example: jvitorfr@outlook.com
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+      type: object
   securitySchemes:
     bearerAuth:
       type: http
       bearerFormat: JWT
       scheme: bearer
-tags: []
+tags:
+  -
+    name: 'Auth Management'
+    description: 'APIs relacionadas à autenticação de usuários'
