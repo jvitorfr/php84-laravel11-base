@@ -4,22 +4,6 @@ info:
   description: 'Documentação da API do meu aplicativo'
   version: 1.0.0
 paths:
-  /register:
-    post:
-      summary: 'Registro de usuário'
-      description: 'Registro necessária para consumo de nossos serviços'
-      operationId: 7169e2b01b06d3afa594a11ab6422148
-      responses:
-        '200':
-          description: 'User register successfully.'
-  /login:
-    post:
-      summary: 'Login de usuário'
-      description: 'autenticação necessária para consumo de nossos serviços'
-      operationId: 45064b495e8f0f1baa093d86e571d8c6
-      responses:
-        '200':
-          description: 'User login successfully.'
   /test:
     get:
       summary: 'mostra pros curiosos que o bagulho funciona'
@@ -36,3 +20,59 @@ paths:
       responses:
         '200':
           description: 'Dados retornados com sucesso'
+  /register:
+    post:
+      summary: 'Registro de usuário'
+      description: 'Registro necessária para consumo de nossos serviços'
+      operationId: 0903f2e0df1a8857bee538fc055417f0
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              required:
+                - name
+                - email
+                - password
+                - c_password
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+                c_password:
+                  type: string
+              type: object
+      responses:
+        '200':
+          description: 'User register successfully.'
+        '400':
+          description: 'Validation Error.'
+  /login:
+    post:
+      summary: 'Login de usuário'
+      description: 'Autenticação necessária para consumo de nossos serviços'
+      operationId: 2dd578ff7aba2721293dac66833b27d1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              required:
+                - email
+                - password
+              properties:
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+              type: object
+      responses:
+        '200':
+          description: 'User login successfully.'
+        '401':
+          description: Unauthorised.

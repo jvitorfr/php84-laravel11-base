@@ -2,14 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Validator;
+use Domain\User\{RegisterUserUseCase, UserLoginUseCase};
+use Illuminate\Http\{JsonResponse, Request};
+use Illuminate\Support\Facades\{Validator};
+use Illuminate\Validation\ValidationException;
+use Throwable;
 
 class AuthController extends BaseController
 {
+    public RegisterUserUseCase $registerUserUseCase;
+    public UserLoginUseCase $userLoginUseCase;
+    
+    public function __construct(RegisterUserUseCase $registerUserUseCase, UserLoginUseCase $userLoginUseCase)
+    {
+        $this->registerUserUseCase = $registerUserUseCase;
+        $this->userLoginUseCase = $userLoginUseCase;
+    }
+    
     /**
      * @OA\Post(
      *     path="/register",
@@ -35,24 +44,29 @@ class AuthController extends BaseController
      */
     public function register(Request $request): JsonResponse
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required',
-            'email' => 'required|email',
-            'password' => 'required',
-            'c_password' => 'required|same:password',
-        ]);
-
-        if ($validator->fails()) {
-            return $this->sendError('Validation Error.', $validator->errors());
+        try {
+            $validator = Validator::make($request->all(), [
+                'name' => 'required|string|max:255',
+                'email' => 'required|email|unique:users,email',
+                'password' => 'required|string|min:8|confirmed',
+            ]);
+            
+            if ($validator->fails()) {
+                throw new ValidationException($validator);
+            }
+            
+            $domainResponse = $this->registerUserUseCase->execute(
+                $request->get('name'),
+                $request->get('email'),
+                $request->get('password')
+            );
+            
+            return $domainResponse->successResponse();
+        } catch (ValidationException $exception) {
+            return $this->sendError('Validation Error.', $exception->validator->errors(), 422);
+        } catch (Throwable $throwable) {
+            return $this->sendError('An error occurred while registering the user.', [$throwable->getMessage()], 500);
         }
-
-        $input = $request->all();
-        $input['password'] = bcrypt($input['password']);
-        $user = User::create($input);
-        $success['token'] = $user->createToken('LaravelApp')->plainTextToken;
-        $success['name'] = $user->name;
-
-        return $this->sendResponse($success, 'User register successfully.');
     }
     
     /**
@@ -78,16 +92,28 @@ class AuthController extends BaseController
      */
     public function login(Request $request): JsonResponse
     {
-        $credentials = $request->only('email', 'password');
-        if (!Auth::attempt($credentials)) {
-            return $this->sendError('Unauthorised.', ['error' => 'Unauthorised']);
+        try {
+            $validator = Validator::make($request->all(), [
+                'email' => 'required|email|unique:users,email',
+                'password' => 'required|string|min:8|confirmed',
+            ]);
+            
+            if ($validator->fails()) {
+                throw new ValidationException($validator);
+            }
+            
+            
+            $domainResponse = $this->userLoginUseCase->execute(
+                $request->get('email'),
+                $request->get('password')
+            );
+            
+            return $domainResponse->successResponse();
+        } catch (ValidationException $exception) {
+            return $this->sendError('Validation Error.', $exception->validator->errors(), 422);
+        } catch (Throwable $throwable) {
+            return $this->sendError('An error occurred while trying login.', [$throwable->getMessage()], 500);
         }
-        /** @var User $user */
-        $user = Auth::user();
-        $success['token'] = $user->createToken('LaravelApp')->plainTextToken;
-        $success['name'] = $user->name;
-
-        return $this->sendResponse($success, 'User login successfully.');
-
+        
     }
 }
