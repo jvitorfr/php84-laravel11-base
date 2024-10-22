@@ -20,6 +20,39 @@ paths:
       responses:
         '200':
           description: 'Dados retornados com sucesso'
+  /api/register:
+    post:
+      summary: 'Registro de usuário'
+      description: 'Registro necessária para consumo de nossos serviços'
+      operationId: 8a56853624e025573120a09a4c75d468
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              required:
+                - name
+                - email
+                - password
+                - c_password
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+                c_password:
+                  type: string
+              type: object
+      responses:
+        '200':
+          description: 'User register successfully.'
+        '400':
+          description: 'Validation Error.'
+        '500':
+          description: 'Internal Server Error.'
   /api/login:
     post:
       summary: 'Login de usuário'
