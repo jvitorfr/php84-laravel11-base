@@ -6,7 +6,7 @@ use Illuminate\Http\JsonResponse;
 
 /**
  * @OA\Info(
- *     title="Test Context",
+ *     title="Laravel Swagger Base Project",
  *     version="1.0.0",
  *     description="Documentação da API do meu aplicativo"
  * )
@@ -15,7 +15,7 @@ class TestController extends BaseController
 {
     /**
      * @OA\PathItem(
-     *     path="/test",
+     *     path="/api/test",
      *     @OA\Get(
      *         summary="mostra pros curiosos que o bagulho funciona",
      *         description="Retorna os dados em formato JSON.",
@@ -35,7 +35,7 @@ class TestController extends BaseController
 
     /**
      * @OA\PathItem(
-     *     path="/test-pre-commit",
+     *     path="/api/test-pre-commit",
      *     @OA\Get(
      *         summary="está funcionando o pre commit",
      *         description="Retorna os dados em formato JSON.",

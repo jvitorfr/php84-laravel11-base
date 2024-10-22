@@ -1,10 +1,10 @@
 openapi: 3.0.0
 info:
-  title: 'Test Context'
+  title: 'Laravel Swagger Base Project'
   description: 'Documentação da API do meu aplicativo'
   version: 1.0.0
 paths:
-  /test:
+  /api/test:
     get:
       summary: 'mostra pros curiosos que o bagulho funciona'
       description: 'Retorna os dados em formato JSON.'
@@ -12,7 +12,7 @@ paths:
       responses:
         '200':
           description: 'Dados retornados com sucesso'
-  /test-pre-commit:
+  /api/test-pre-commit:
     get:
       summary: 'está funcionando o pre commit'
       description: 'Retorna os dados em formato JSON.'
@@ -22,8 +22,8 @@ paths:
           description: 'Dados retornados com sucesso'
   /api/register:
     post:
-      summary: 'Registro de usuário'
-      description: 'Registro necessária para consumo de nossos serviços'
+      summary: 'Registro de usuário.'
+      description: 'Registro necessário para consumo de nossos serviços'
       operationId: 8a56853624e025573120a09a4c75d468
       requestBody:
         required: true
@@ -78,3 +78,4 @@ paths:
           description: 'User login successfully.'
         '401':
           description: Unauthorised.
+tags: []
