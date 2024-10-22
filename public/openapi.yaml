@@ -13,10 +13,10 @@ paths:
         '200':
           description: 'User register successfully.'
   /login:
-    get:
+    post:
       summary: 'Login de usuário'
       description: 'autenticação necessária para consumo de nossos serviços'
-      operationId: 1801e25f84de2ebe1b75b549ded1f08b
+      operationId: 45064b495e8f0f1baa093d86e571d8c6
       responses:
         '200':
           description: 'User login successfully.'
