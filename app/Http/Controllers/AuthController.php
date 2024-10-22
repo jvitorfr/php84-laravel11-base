@@ -45,7 +45,7 @@ class AuthController extends BaseController
     /**
      * @OA\PathItem(
      *     path="/login",
-     *     @OA\Get(
+     *     @OA\Post(
      *         summary="Login de usuário",
      *         description="autenticação necessária para consumo de nossos serviços",
      *         @OA\Response(response="200", description="User login successfully.")

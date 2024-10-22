@@ -23,7 +23,7 @@ class BaseController extends Controller
             'message' => $message,
         ], 200);
     }
-    
+
     /**
      * return error response.
      *
@@ -38,12 +38,11 @@ class BaseController extends Controller
             'success' => false,
             'message' => $error,
         ];
-        
+
         if (!empty($errorMessages)) {
             $response['data'] = $errorMessages;
         }
-        
+
         return response()->json($response, $code);
     }
 }
-
