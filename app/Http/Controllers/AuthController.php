@@ -11,13 +11,26 @@ use Illuminate\Support\Facades\Validator;
 class AuthController extends BaseController
 {
     /**
-     * @OA\PathItem(
+     * @OA\Post(
      *     path="/register",
-     *     @OA\Post(
-     *         summary="Registro de usuário",
-     *         description="Registro necessária para consumo de nossos serviços",
-     *         @OA\Response(response="200", description="User register successfully.")
+     *     summary="Registro de usuário",
+     *     description="Registro necessária para consumo de nossos serviços",
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 type="object",
+     *                 @OA\Property(property="name", type="string"),
+     *                 @OA\Property(property="email", type="string", format="email"),
+     *                 @OA\Property(property="password", type="string"),
+     *                 @OA\Property(property="c_password", type="string"),
+     *                 required={"name", "email", "password", "c_password"}
+     *             )
+     *         )
      *     ),
+     *     @OA\Response(response="200", description="User register successfully."),
+     *     @OA\Response(response="400", description="Validation Error.")
      * )
      */
     public function register(Request $request): JsonResponse
@@ -41,15 +54,26 @@ class AuthController extends BaseController
 
         return $this->sendResponse($success, 'User register successfully.');
     }
-
+    
     /**
-     * @OA\PathItem(
+     * @OA\Post(
      *     path="/login",
-     *     @OA\Post(
-     *         summary="Login de usuário",
-     *         description="autenticação necessária para consumo de nossos serviços",
-     *         @OA\Response(response="200", description="User login successfully.")
+     *     summary="Login de usuário",
+     *     description="Autenticação necessária para consumo de nossos serviços",
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 type="object",
+     *                 @OA\Property(property="email", type="string", format="email"),
+     *                 @OA\Property(property="password", type="string"),
+     *                 required={"email", "password"}
+     *             )
+     *         )
      *     ),
+     *     @OA\Response(response="200", description="User login successfully."),
+     *     @OA\Response(response="401", description="Unauthorised.")
      * )
      */
     public function login(Request $request): JsonResponse
