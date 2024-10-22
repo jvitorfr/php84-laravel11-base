@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use Domain\User\{UseCase\Login\UserLoginUseCase, UseCase\Register\RegisterUserUseCase};
+use Domain\User\{UseCase\Login\LoginUserParams,
+    UseCase\Login\UserLoginUseCase,
+    UseCase\Register\RegisterUserParams,
+    UseCase\Register\RegisterUserUseCase};
 use Illuminate\Http\{JsonResponse, Request};
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
+use InvalidArgumentException;
 use Throwable;
 
 /**
@@ -29,13 +33,13 @@ class AuthController extends BaseController
 {
     public RegisterUserUseCase $registerUserUseCase;
     public UserLoginUseCase $userLoginUseCase;
-
+    
     public function __construct(RegisterUserUseCase $registerUserUseCase, UserLoginUseCase $userLoginUseCase)
     {
         $this->registerUserUseCase = $registerUserUseCase;
         $this->userLoginUseCase = $userLoginUseCase;
     }
-
+    
     /**
      * @OA\Post(
      *     path="/api/register",
@@ -66,27 +70,28 @@ class AuthController extends BaseController
             $validator = Validator::make($request->all(), [
                 'name' => 'required|string|max:255',
                 'email' => 'required|email|unique:users,email',
-                'password' => 'required|string|min:8|confirmed',
+                'password' => 'required|string|min:8|confirmed:c_password',
             ]);
-
+            
+            
             if ($validator->fails()) {
                 throw new ValidationException($validator);
             }
-
-            $domainResponse = $this->registerUserUseCase->execute(
+            
+            $domainResponse = $this->registerUserUseCase->execute(new RegisterUserParams(
                 $request->get('name'),
                 $request->get('email'),
                 $request->get('password')
-            );
-
+                ));
+            
             return $domainResponse->successResponse();
-        } catch (ValidationException $exception) {
+        } catch (ValidationException | InvalidArgumentException $exception) {
             return $this->sendError('Validation Error.', $exception->validator->errors(), 422);
         } catch (Throwable $throwable) {
             return $this->sendError('An error occurred while registering the user.', [$throwable->getMessage()], 500);
         }
     }
-
+    
     /**
      * @OA\Post(
      *     path="/api/login",
@@ -115,18 +120,18 @@ class AuthController extends BaseController
                 'email' => 'required|email',
                 'password' => 'required|string|min:8',
             ]);
-
+            
             if ($validator->fails()) {
                 throw new ValidationException($validator);
             }
-
-            $domainResponse = $this->userLoginUseCase->execute(
+            
+            $domainResponse = $this->userLoginUseCase->execute(new LoginUserParams(
                 $request->get('email'),
                 $request->get('password')
-            );
-
+            ));
+            
             return $domainResponse->successResponse();
-        } catch (ValidationException $exception) {
+        } catch (ValidationException | InvalidArgumentException $exception) {
             return $this->sendError('Validation Error.', $exception->validator->errors(), 422);
         } catch (Throwable $throwable) {
             return $this->sendError('An error occurred while trying to login.', [$throwable->getMessage()], 500);

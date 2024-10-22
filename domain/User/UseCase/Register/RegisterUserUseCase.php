@@ -3,7 +3,7 @@
 namespace Domain\User\UseCase\Register;
 
 use Domain\Contracts\UseCaseInterface;
-use Domain\Responses\DomainResponse;
+use Domain\DomainResponse;
 use Domain\User\Models\User;
 use Domain\User\Repositories\UserRepository;
 use InvalidArgumentException;
@@ -30,11 +30,10 @@ class RegisterUserUseCase implements UseCaseInterface
         }
 
         $registerUserParams = $params[0];
-
         $password = bcrypt($registerUserParams->password);
 
         /** @var User $user */
-        $user = $this->repository ->create([
+        $user = $this->repository->create([
             'name' => $registerUserParams->name,
             'email' => $registerUserParams->email,
             'password' => $password,

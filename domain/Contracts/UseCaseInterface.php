@@ -2,7 +2,7 @@
 
 namespace Domain\Contracts;
 
-use Domain\Responses\DomainResponse;
+use Domain\DomainResponse;
 
 /**
  * @template TParams

@@ -3,7 +3,7 @@
 namespace Domain\User\UseCase\Login;
 
 use Domain\Contracts\UseCaseInterface;
-use Domain\Responses\DomainResponse;
+use Domain\DomainResponse;
 use Domain\User\Models\User;
 use Illuminate\Support\Facades\Auth;
 use InvalidArgumentException;
