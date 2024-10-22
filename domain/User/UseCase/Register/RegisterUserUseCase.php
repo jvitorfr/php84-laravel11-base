@@ -1,5 +1,5 @@
 <?php
-namespace Domain\User;
+namespace Domain\User\UseCase\Register;
 
 use Domain\Contracts\UseCaseInterface;
 use Domain\Responses\DomainResponse;
@@ -20,26 +20,23 @@ class RegisterUserUseCase implements UseCaseInterface
     /**
      * Execute the use case for user registration.
      *
-     * @param string $name
-     * @param string $email
-     * @param string $password
+     * @param RegisterUserParams $params
      * @return DomainResponse
      */
-    public function execute(...$params): DomainResponse
+    public function execute(... $params): DomainResponse
     {
-        
-        if (count($params) !== 3) {
-            throw new InvalidArgumentException('Invalid number of parameters provided.');
+        if (count($params) !== 1 || !($params[0] instanceof RegisterUserParams)) {
+            throw new InvalidArgumentException('Invalid parameters provided.');
         }
     
-        [$name, $email, $password] = $params;
+        $registerUserParams = $params[0];
         
-        $password = bcrypt($password);
+        $password = bcrypt($registerUserParams->password);
         
         /** @var User $user */
         $user = $this->repository ->create([
-            'name' => $name,
-            'email' => $email,
+            'name' => $registerUserParams->name,
+            'email' => $registerUserParams->email,
             'password' => $password,
         ]);
         

@@ -1,13 +1,19 @@
 <?php
-namespace Domain\Contracts;
 
+namespace Domain\Contracts;
 
 use Domain\Responses\DomainResponse;
 
-interface UseCaseInterface {
+/**
+ * @template TParams
+ */
+interface UseCaseInterface
+{
     /**
-     * @param mixed ...$params The parameters needed for execution.
+     * Execute the use case with specified parameters.
+     *
+     * @param mixed $params The parameters needed for execution.
      * @return DomainResponse
      */
-    public function execute(...$params): DomainResponse;
+    public function execute(mixed $params): DomainResponse;
 }

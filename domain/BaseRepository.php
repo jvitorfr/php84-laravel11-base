@@ -5,6 +5,10 @@ namespace Domain;
 use Domain\Contracts\Repositories\BaseRepositoryInterface;
 use Illuminate\Database\Eloquent\{Collection, Model};
 
+/**
+ * @template TModel of Model
+ * @template TKey
+ */
 class BaseRepository implements BaseRepositoryInterface
 {
     protected Model $model;
@@ -14,21 +18,53 @@ class BaseRepository implements BaseRepositoryInterface
         $this->model = $model;
     }
     
+    /**
+     * Get all records from the model.
+     *
+     * @return Collection<int, TModel>
+     */
     public function all(): Collection
     {
-        return $this->model->all();
+        /** @var Collection<int, TModel> $collection */
+        $collection = $this->model::all();
+        return $collection;
     }
     
+    /**
+     * Find a record by its primary key.
+     *
+     * @param int|string $id
+     * @return TModel
+     *
+     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
+     */
     public function find(int|string $id): Model
     {
-        return $this->model->findOrFail($id);
+        /** @var TModel $model */
+        $model = $this->model->findOrFail($id);
+        return $model;
     }
     
+    /**
+     * Create a new record in the model.
+     *
+     * @param array<string, mixed> $data
+     * @return TModel
+     */
     public function create(array $data): Model
     {
-        return $this->model->create($data);
+        /** @var TModel $model */
+        $model = $this->model->create($data);
+        return $model;
     }
     
+    /**
+     * Update a record in the model.
+     *
+     * @param int|string $id
+     * @param array<string, mixed> $data
+     * @return TModel
+     */
     public function update(int|string $id, array $data): Model
     {
         $model = $this->find($id);
@@ -37,11 +73,15 @@ class BaseRepository implements BaseRepositoryInterface
         return $model;
     }
     
-    public function delete(int|string $id): bool
+    /**
+     * Delete a record from the model.
+     *
+     * @param int|string $id
+     * @return bool|null
+     */
+    public function delete(int|string $id): ?bool
     {
         $model = $this->find($id);
-        $model->delete();
-        
-        return true;
+        return $model->delete();
     }
 }

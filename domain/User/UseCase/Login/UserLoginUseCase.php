@@ -1,15 +1,15 @@
 <?php
 
-namespace Domain\User;
+namespace Domain\User\UseCase\Login;
 
+use Domain\Contracts\UseCaseInterface;
 use Domain\Responses\DomainResponse;
 use Domain\User\Models\User;
 use Illuminate\Support\Facades\Auth;
 use InvalidArgumentException;
 
-class UserLoginUseCase
+class UserLoginUseCase implements UseCaseInterface
 {
-    
     
     public function __construct()
     {
@@ -18,22 +18,22 @@ class UserLoginUseCase
     /**
      * Execute the use case for user login.
      *
-     * @param string $email
-     * @param string $password
+     * @param LoginUserParams $params
      * @return DomainResponse
      */
     public function execute(...$params): DomainResponse
     {
         
-        if (count($params) !== 2) {
-            throw new InvalidArgumentException('Invalid number of parameters provided.');
+        if (count($params) !== 1 || !($params[0] instanceof LoginUserParams)) {
+            throw new InvalidArgumentException('Invalid parameters provided.');
         }
         
-        [$email, $password] = $params;
+        $loginParams = $params[0];
         
-        if (!Auth::attempt(['email' => $email, 'password' => $password])) {
+        if (!Auth::attempt(['email' => $loginParams->email, 'password' => $loginParams->password])) {
             return new DomainResponse(false, [], 'Login Error');
         }
+        
         /** @var User $user */
         $user = Auth::user();
         $success['token'] = $user->createToken('LaravelApp')->plainTextToken;

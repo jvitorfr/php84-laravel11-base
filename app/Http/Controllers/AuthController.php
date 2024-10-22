@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Domain\User\{RegisterUserUseCase, UserLoginUseCase};
+use InvalidArgumentException;
+use Domain\User\{UseCase\Login\UserLoginUseCase, UseCase\Register\RegisterUserUseCase};
 use Illuminate\Http\{JsonResponse, Request};
 use Illuminate\Support\Facades\{Validator};
 use Illuminate\Validation\ValidationException;
@@ -102,16 +103,16 @@ class AuthController extends BaseController
                 throw new ValidationException($validator);
             }
             
-            
             $domainResponse = $this->userLoginUseCase->execute(
                 $request->get('email'),
                 $request->get('password')
             );
             
             return $domainResponse->successResponse();
-        } catch (ValidationException $exception) {
+        } catch (ValidationException | InvalidArgumentException $exception) {
             return $this->sendError('Validation Error.', $exception->validator->errors(), 422);
-        } catch (Throwable $throwable) {
+        }
+        catch (Throwable $throwable) {
             return $this->sendError('An error occurred while trying login.', [$throwable->getMessage()], 500);
         }
         
