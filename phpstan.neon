@@ -1,6 +1,5 @@
 parameters:
     level: 8
-
     bootstrapFiles:
         - vendor/autoload.php
     paths:
@@ -12,3 +11,5 @@ parameters:
         - vendor
         - storage/framework
 
+includes:
+    - vendor/nunomaduro/larastan/extension.neon
