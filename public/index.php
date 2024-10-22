@@ -4,8 +4,9 @@ use Illuminate\Http\Request;
 use OpenApi\Generator;
 
 define('LARAVEL_START', microtime(true));
-//error_reporting(E_ALL & ~E_DEPRECATED & ~E_STRICT);
-error_reporting(0);
+error_reporting(E_ALL & ~E_DEPRECATED);
+
+//error_reporting(0);
 if (file_exists($maintenance = __DIR__.'/../storage/framework/maintenance.php')) {
     require $maintenance;
 }

@@ -63,6 +63,7 @@ class AuthController extends BaseController
     public function register(Request $request): JsonResponse
     {
         try {
+            dd('a1');
             $validator = Validator::make($request->all(), [
                 'name' => 'required|string|max:255',
                 'email' => 'required|email|unique:users,email',
