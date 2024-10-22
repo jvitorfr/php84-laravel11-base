@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use Domain\User\{UseCase\Login\UserLoginUseCase, UseCase\Register\RegisterUserUseCase};
@@ -8,9 +9,20 @@ use Illuminate\Validation\ValidationException;
 use Throwable;
 
 /**
+ * @OA\Info(title="API Title", version="1.0")
+ *
+ * @OA\SecurityScheme(
+ *     type="http",
+ *     securityScheme="bearerAuth",
+ *     scheme="bearer",
+ *     bearerFormat="JWT"
+ * )
+ */
+
+/**
  * @OA\Tag(
  *     name="Auth Management",
- *     description="APIs related to user auth interations"
+ *     description="APIs related to user auth interactions"
  * )
  */
 class AuthController extends BaseController
@@ -117,8 +129,7 @@ class AuthController extends BaseController
         } catch (ValidationException $exception) {
             return $this->sendError('Validation Error.', $exception->validator->errors(), 422);
         } catch (Throwable $throwable) {
-            return $this->sendError('An error occurred while trying login.', [$throwable->getMessage()], 500);
+            return $this->sendError('An error occurred while trying to login.', [$throwable->getMessage()], 500);
         }
     }
 }
-
