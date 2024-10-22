@@ -13,7 +13,7 @@ class RouteServiceProvider extends ServiceProvider
      * @var string
      */
     protected $namespace = 'App\Http\Controllers';
-    
+
     /**
      * Defina as rotas da aplicação.
      *
@@ -24,7 +24,7 @@ class RouteServiceProvider extends ServiceProvider
         $this->mapApiRoutes();
         $this->mapWebRoutes();
     }
-    
+
     /**
      * Defina as rotas da API.
      *
@@ -37,7 +37,7 @@ class RouteServiceProvider extends ServiceProvider
         ->namespace($this->namespace) // Namespace dos controladores
         ->group(base_path('routes/api.php')); // O arquivo de rotas
     }
-    
+
     /**
      * Defina as rotas da web.
      *
@@ -50,4 +50,3 @@ class RouteServiceProvider extends ServiceProvider
             ->group(base_path('routes/web.php'));
     }
 }
-
