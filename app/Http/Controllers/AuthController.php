@@ -110,7 +110,8 @@ class AuthController extends BaseController
      *         )
      *     ),
      *     @OA\Response(response="200", description="User login successfully."),
-     *     @OA\Response(response="401", description="Unauthorised.")
+     *     @OA\Response(response="401", description="Unauthorised."),
+     *     @OA\Response(response="500", description="Internal Server Error.")
      * )
      */
     public function login(Request $request): JsonResponse

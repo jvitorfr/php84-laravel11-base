@@ -11,11 +11,13 @@ Route::get('/', function () {
     return view('swagger-ui');
 });
 
+Route::post('/login', [AuthController::class, 'login']);
+Route::post('/register', [AuthController::class, 'register']);
+
 Route::get('/test', [TestController::class, 'index']);
 Route::get('/test-pre-commit', [TestController::class, 'testPreCommit']);
 
-Route::post('/login', [AuthController::class, 'login']);
-Route::post('/register', [AuthController::class, 'register']);
+
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', function (Request $request) {
