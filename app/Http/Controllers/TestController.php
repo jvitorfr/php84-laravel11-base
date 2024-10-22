@@ -6,12 +6,12 @@ use Illuminate\Http\JsonResponse;
 
 /**
  * @OA\Info(
- *     title="Meu API",
+ *     title="Test Context",
  *     version="1.0.0",
  *     description="Documentação da API do meu aplicativo"
  * )
  */
-class TestController extends Controller
+class TestController extends BaseController
 {
     /**
      * @OA\PathItem(

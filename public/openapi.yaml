@@ -1,9 +1,25 @@
 openapi: 3.0.0
 info:
-  title: 'Meu API'
-  description: 'Documentação da API do meu aplicativo'
+  title: 'Auth Context'
+  description: Autenticação
   version: 1.0.0
 paths:
+  /register:
+    get:
+      summary: 'Registro de usuário'
+      description: 'Registro necessária para consumo de nossos serviços'
+      operationId: 5a6235ceb130ee98f304e5ca0a48718f
+      responses:
+        '200':
+          description: 'User register successfully.'
+  /login:
+    get:
+      summary: 'Login de usuário'
+      description: 'autenticação necessária para consumo de nossos serviços'
+      operationId: 1801e25f84de2ebe1b75b549ded1f08b
+      responses:
+        '200':
+          description: 'User login successfully.'
   /test:
     get:
       summary: 'mostra pros curiosos que o bagulho funciona'
@@ -14,7 +30,7 @@ paths:
           description: 'Dados retornados com sucesso'
   /test-pre-commit:
     get:
-      summary: 'mostra pros curiosos o pre-commit'
+      summary: 'está funcionando o pre commit'
       description: 'Retorna os dados em formato JSON.'
       operationId: 6132ec222c5d6ad71f66ad2f583a1ffd
       responses:
