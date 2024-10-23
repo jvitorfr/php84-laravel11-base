@@ -4,13 +4,13 @@ info:
   description: 'Documentação da API do meu aplicativo'
   version: 1.0.0
 paths:
-  /auth/register:
+  /api/auth/register:
     post:
       tags:
         - 'Auth Management'
       summary: 'Registro de usuário.'
       description: 'Registro necessário para consumo de nossos serviços'
-      operationId: ed42f392010c301892e640067141676e
+      operationId: d764dd091cc4494ae0baf360b03319f3
       requestBody:
         required: true
         content:
@@ -39,13 +39,13 @@ paths:
           description: 'Validation Error.'
         '500':
           description: 'Internal Server Error.'
-  /auth/login:
+  /api/auth/login:
     post:
       tags:
         - 'Auth Management'
       summary: 'Login de usuário'
       description: 'Autenticação necessária para consumo de nossos serviços'
-      operationId: 8cb7742ae98d0990acb2907c4e00bf24
+      operationId: 8dcb70df1020986038d098cc08d05dae
       requestBody:
         required: true
         content:
@@ -68,12 +68,12 @@ paths:
           description: Unauthorized.
         '500':
           description: 'Internal Server Error.'
-  /auth/me:
+  /api/auth/me:
     get:
       tags:
         - 'Auth Management'
       summary: 'Obter o usuário autenticado atual'
-      operationId: a9c495788506b114956e3f509e5d90a2
+      operationId: b9abb1a7a74670a19c215c2c133f14d8
       responses:
         '200':
           description: 'Usuário recuperado com sucesso'
@@ -83,6 +83,9 @@ paths:
                 $ref: '#/components/schemas/User'
         '401':
           description: 'Não autenticado'
+      security:
+        -
+          bearerAuth: []
 components:
   schemas:
     User:
@@ -106,7 +109,7 @@ components:
   securitySchemes:
     bearerAuth:
       type: http
-      bearerFormat: JWT
+      bearerFormat: 'API Token'
       scheme: bearer
 tags:
   -

@@ -26,7 +26,7 @@ use Throwable;
  *     type="http",
  *     securityScheme="bearerAuth",
  *     scheme="bearer",
- *     bearerFormat="JWT"
+ *     bearerFormat="API Token"
  * )
  *
  * @OA\Tag(
@@ -48,16 +48,16 @@ class AuthController extends BaseController
 {
     public RegisterUserUseCase $registerUserUseCase;
     public UserLoginUseCase $userLoginUseCase;
-    
+
     public function __construct(RegisterUserUseCase $registerUserUseCase, UserLoginUseCase $userLoginUseCase)
     {
         $this->registerUserUseCase = $registerUserUseCase;
         $this->userLoginUseCase = $userLoginUseCase;
     }
-    
+
     /**
      * @OA\Post(
-     *     path="/auth/register",
+     *     path="/api/auth/register",
      *     tags={"Auth Management"},
      *     summary="Registro de usuário.",
      *     description="Registro necessário para consumo de nossos serviços",
@@ -88,18 +88,18 @@ class AuthController extends BaseController
                 'email' => 'required|email|unique:users,email',
                 'password' => 'required|string|min:8|confirmed:c_password',
             ]);
-            
-            
+
+
             if ($validator->fails()) {
                 throw new ValidationException($validator);
             }
-            
+
             $domainResponse = $this->registerUserUseCase->execute(new RegisterUserParams(
                 $request->get('name'),
                 $request->get('email'),
                 $request->get('password')
             ));
-            
+
             return $domainResponse->successResponse();
         } catch (ValidationException | InvalidArgumentException $exception) {
             return $this->sendError('Validation Error.', $exception->validator->errors(), 422);
@@ -107,10 +107,10 @@ class AuthController extends BaseController
             return $this->sendError('An error occurred while registering the user.', [$throwable->getMessage()], 500);
         }
     }
-    
+
     /**
      * @OA\Post(
-     *     path="/auth/login",
+     *     path="/api/auth/login",
      *     tags={"Auth Management"},
      *     summary="Login de usuário",
      *     description="Autenticação necessária para consumo de nossos serviços",
@@ -138,16 +138,16 @@ class AuthController extends BaseController
                 'email' => 'required|email',
                 'password' => 'required|string|min:8',
             ]);
-            
+
             if ($validator->fails()) {
                 throw new ValidationException($validator);
             }
-            
+
             $domainResponse = $this->userLoginUseCase->execute(new LoginUserParams(
                 $request->get('email'),
                 $request->get('password')
             ));
-            
+
             return $domainResponse->successResponse();
         } catch (ValidationException | InvalidArgumentException $exception) {
             return $this->sendError('Validation Error.', $exception->validator->errors(), 422);
@@ -160,9 +160,10 @@ class AuthController extends BaseController
     
     /**
      * @OA\Get(
-     *     path="/auth/me",
+     *     path="/api/auth/me",
      *     tags={"Auth Management"},
      *     summary="Obter o usuário autenticado atual",
+     *     security={{"bearerAuth": {}}},
      *     @OA\Response(
      *         response=200,
      *         description="Usuário recuperado com sucesso",
@@ -178,7 +179,7 @@ class AuthController extends BaseController
     {
         try {
             return $this->sendResponse([Auth::user()], "its you!!!");
-        }  catch (Throwable $throwable) {
+        } catch (Throwable $throwable) {
             return $this->sendError('An error occurred while get logged user.', [$throwable->getMessage()], 500);
         }
     }

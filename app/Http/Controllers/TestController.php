@@ -6,7 +6,6 @@ use Illuminate\Http\JsonResponse;
 
 class TestController extends BaseController
 {
-
     public function index(): JsonResponse
     {
         $data = [
@@ -15,7 +14,7 @@ class TestController extends BaseController
 
         return response()->json($data);
     }
-    
+
     public function testPreCommit(): JsonResponse
     {
         $data = [
