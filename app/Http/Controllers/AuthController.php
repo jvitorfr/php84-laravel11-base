@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Domain\Contracts\Repositories\IUserRepository;
 use Domain\User\{UseCase\Login\LoginUserParams,
     UseCase\Login\UserLoginUseCase,
     UseCase\Register\RegisterUserParams,
@@ -127,8 +128,8 @@ class AuthController extends BaseController
      *         )
      *     ),
      *     @OA\Response(response="200", description="User login successfully."),
-     *     @OA\Response(response="401", description="Unauthorized."),
-     *     @OA\Response(response="500", description="Internal Server Error.")
+     *     @OA\Response(response="401", description="Não autenticado."),
+     *     @OA\Response(response="500", description="Erro interno do servidor.")
      * )
      */
     public function login(Request $request): JsonResponse
@@ -157,7 +158,7 @@ class AuthController extends BaseController
             return $this->sendError('An error occurred while trying to login.', [$throwable->getMessage()], 500);
         }
     }
-    
+
     /**
      * @OA\Get(
      *     path="/api/auth/me",

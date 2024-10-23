@@ -2,14 +2,14 @@
 
 namespace Domain;
 
-use Domain\Contracts\Repositories\BaseRepositoryInterface;
+use Domain\Contracts\Repositories\IBaseRepository;
 use Illuminate\Database\Eloquent\{Collection, Model};
 
 /**
  * @template TModel of Model
  * @template TKey
  */
-class BaseRepository implements BaseRepositoryInterface
+class BaseRepository implements IBaseRepository
 {
     protected Model $model;
 

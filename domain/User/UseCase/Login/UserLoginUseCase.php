@@ -7,7 +7,6 @@ use Domain\DomainResponse;
 use Domain\User\Models\User;
 use Exception;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\ValidationException;
 use InvalidArgumentException;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 

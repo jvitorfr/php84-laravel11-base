@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
  * @template TModel of Model
  * @template TKey
  */
-interface BaseRepositoryInterface
+interface IBaseRepository
 {
     /**
      * Get all records from the model.

@@ -2,17 +2,17 @@
 
 namespace Domain\User\UseCase\Register;
 
+use Domain\Contracts\Repositories\IUserRepository;
 use Domain\Contracts\UseCaseInterface;
 use Domain\DomainResponse;
 use Domain\User\Models\User;
-use Domain\User\Repositories\UserRepository;
 use InvalidArgumentException;
 
 class RegisterUserUseCase implements UseCaseInterface
 {
-    private UserRepository $repository;
+    private IUserRepository $repository;
 
-    public function __construct(UserRepository $repository)
+    public function __construct(IUserRepository $repository)
     {
         $this->repository = $repository;
     }

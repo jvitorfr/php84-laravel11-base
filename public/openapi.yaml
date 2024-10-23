@@ -65,9 +65,9 @@ paths:
         '200':
           description: 'User login successfully.'
         '401':
-          description: Unauthorized.
+          description: 'Não autenticado.'
         '500':
-          description: 'Internal Server Error.'
+          description: 'Erro interno do servidor.'
   /api/auth/me:
     get:
       tags:
@@ -83,6 +83,197 @@ paths:
                 $ref: '#/components/schemas/User'
         '401':
           description: 'Não autenticado'
+      security:
+        -
+          bearerAuth: []
+  /api/users:
+    get:
+      tags:
+        - Users
+      summary: 'Obter todos'
+      description: 'Obter todos'
+      operationId: c457726701591d1183b53aa71fc13441
+      responses:
+        '200':
+          description: 'Consulta realizada com sucesso.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '401':
+          description: 'Não autenticado'
+      security:
+        -
+          bearerAuth: []
+    post:
+      tags:
+        - Users
+      summary: 'Criação de usuário'
+      description: 'Registro de usuário por Usuário logado.'
+      operationId: 592819a0265360b2014512d6dbfaf0e7
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              required:
+                - name
+                - email
+                - password
+                - c_password
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+                c_password:
+                  type: string
+              type: object
+      responses:
+        '200':
+          description: 'User register successfully.'
+        '400':
+          description: 'Validation Error.'
+        '500':
+          description: 'Internal Server Error.'
+      security:
+        -
+          bearerAuth: []
+  '/api/users/{id}':
+    get:
+      tags:
+        - Users
+      summary: 'Obter o objeto por Id'
+      description: 'Obter um usuário pelo Id'
+      operationId: 36a33ff774d5cba33c039dec2c3e0287
+      parameters:
+        -
+          name: id
+          in: path
+          description: 'ID do usuário'
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: 'Consulta realizada com sucesso.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '401':
+          description: 'Não autenticado'
+        '404':
+          description: 'Usuário não encontrado'
+      security:
+        -
+          bearerAuth: []
+    put:
+      tags:
+        - Users
+      summary: 'Atualizar o objeto por Id'
+      description: 'Atualizar um usuário pelo Id'
+      operationId: b9091397c8b25f12c6adb74be6ce3a5a
+      parameters:
+        -
+          name: id
+          in: path
+          description: 'ID do usuário'
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        description: 'Dados para atualização'
+        required: true
+        content:
+          application/json:
+            schema:
+              required:
+                - name
+                - email
+              properties:
+                name:
+                  type: string
+                  example: 'John Doe'
+                email:
+                  type: string
+                  example: johndoe@example.com
+              type: object
+      responses:
+        '200':
+          description: 'Atualização realizada com sucesso.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '401':
+          description: 'Não autenticado'
+        '404':
+          description: 'Usuário não encontrado'
+      security:
+        -
+          bearerAuth: []
+    delete:
+      tags:
+        - Users
+      summary: 'Deleta o usuário por Id'
+      description: 'Deleta o usuário correspondente ao Id fornecido'
+      operationId: fa56cffde745d3f152f95cbacd936c0b
+      parameters:
+        -
+          name: id
+          in: path
+          description: 'ID do usuário a ser deletado'
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: 'Remoção realizada com sucesso.'
+          content:
+            application/json:
+              schema:
+                properties:
+                  message: { type: string, example: 'Usuário deletado com sucesso' }
+                type: object
+        '400':
+          description: 'ID inválido'
+          content:
+            application/json:
+              schema:
+                properties:
+                  message: { type: string, example: 'ID inválido fornecido' }
+                type: object
+        '401':
+          description: 'Não autenticado'
+          content:
+            application/json:
+              schema:
+                properties:
+                  message: { type: string, example: 'Não autenticado' }
+                  success: { type: boolean, example: 'false' }
+                type: object
+        '403':
+          description: 'Sem permissão para deletar o usuário'
+          content:
+            application/json:
+              schema:
+                properties:
+                  message: { type: string, example: 'Acesso negado' }
+                  success: { type: boolean, example: 'false' }
+                type: object
+        '404':
+          description: 'Usuário não encontrado'
+          content:
+            application/json:
+              schema:
+                properties:
+                  message: { type: string, example: 'Usuário não encontrado' }
+                  success: { type: boolean, example: 'false' }
+                type: object
       security:
         -
           bearerAuth: []
@@ -115,3 +306,6 @@ tags:
   -
     name: 'Auth Management'
     description: 'APIs relacionadas à autenticação de usuários'
+  -
+    name: Users
+    description: 'APIs relacionado a usuários'
