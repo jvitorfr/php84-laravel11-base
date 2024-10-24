@@ -12,5 +12,4 @@ class UserRepository extends BaseRepository implements IUserRepository
     {
         parent::__construct($user);
     }
-
 }

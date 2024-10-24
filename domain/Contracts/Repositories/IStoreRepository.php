@@ -2,7 +2,7 @@
 
 namespace Domain\Contracts\Repositories;
 
-interface IUserRepository extends IBaseRepository
+interface IStoreRepository extends IBaseRepository
 {
 
 }

@@ -238,6 +238,7 @@ paths:
               schema:
                 properties:
                   message: { type: string, example: 'Usuário deletado com sucesso' }
+                  success: { type: boolean, example: 'true' }
                 type: object
         '400':
           description: 'ID inválido'
@@ -246,6 +247,7 @@ paths:
               schema:
                 properties:
                   message: { type: string, example: 'ID inválido fornecido' }
+                  success: { type: boolean, example: 'false' }
                 type: object
         '401':
           description: 'Não autenticado'
