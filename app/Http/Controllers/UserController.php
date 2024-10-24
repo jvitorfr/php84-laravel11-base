@@ -43,7 +43,7 @@ class UserController extends BaseController
      *     )
      * )
      */
-    public function index()
+    public function index(): JsonResponse
     {
         return $this->sendResponse($this->userRepository->all()->toArray(), "Consulta realizada.");
     }

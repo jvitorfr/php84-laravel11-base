@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Domain\Contracts\Repositories\IUserRepository;
 use Domain\User\{UseCase\Login\LoginUserParams,
     UseCase\Login\UserLoginUseCase,
     UseCase\Register\RegisterUserParams,
