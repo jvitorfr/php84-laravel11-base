@@ -19,12 +19,12 @@ use Throwable;
 class UserController extends BaseController
 {
     public IUserRepository $userRepository;
-    
+
     public function __construct(IUserRepository $userRepository)
     {
         $this->userRepository = $userRepository;
     }
-    
+
     /**
      * @OA\Get(
      *     path="/api/users",
@@ -47,7 +47,7 @@ class UserController extends BaseController
     {
         return $this->sendResponse($this->userRepository->all()->toArray(), "Consulta realizada.");
     }
-    
+
     /**
      * @OA\Post(
      *     path="/api/users",
@@ -78,7 +78,7 @@ class UserController extends BaseController
     {
         return $this->sendResponse($this->userRepository->create($request->all())->toArray(), 'Criação realizada.');
     }
-    
+
     /**
      * @OA\Get(
      *     path="/api/users/{id}",
@@ -108,12 +108,12 @@ class UserController extends BaseController
      *     )
      * )
      */
-    
+
     public function show(string $id): JsonResponse
     {
         return $this->sendResponse($this->userRepository->find($id)->toArray(), 'Consulta realizada.');
     }
-    
+
     /**
      * @OA\Put(
      *     path="/api/users/{id}",
@@ -165,7 +165,7 @@ class UserController extends BaseController
     {
         return $this->sendResponse($this->userRepository->update($id, $request->all())->toArray(), 'Atualização realizada.');
     }
-    
+
     /**
      * @OA\Delete(
      *     path="/api/users/{id}",
@@ -235,9 +235,9 @@ class UserController extends BaseController
             if (strlen($id) > 11) {
                 throw new Exception("ID inválido", 400);
             }
-            
+
             $this->userRepository->delete($id);
-            
+
             return $this->sendResponse([], 'Remoção Concluída.');
         } catch (ModelNotFoundException $exception) {
             return $this->sendError("Usuário não encontrado");
