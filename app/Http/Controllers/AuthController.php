@@ -48,13 +48,13 @@ class AuthController extends BaseController
 {
     public RegisterUserUseCase $registerUserUseCase;
     public UserLoginUseCase $userLoginUseCase;
-    
+
     public function __construct(RegisterUserUseCase $registerUserUseCase, UserLoginUseCase $userLoginUseCase)
     {
         $this->registerUserUseCase = $registerUserUseCase;
         $this->userLoginUseCase = $userLoginUseCase;
     }
-    
+
     /**
      * @OA\Post(
      *     path="/api/auth/register",
@@ -83,13 +83,13 @@ class AuthController extends BaseController
     public function register(RegisterUserRequest $request): JsonResponse
     {
         try {
-            
+
             $domainResponse = $this->registerUserUseCase->execute(new RegisterUserParams(
                 $request->get('name'),
                 $request->get('email'),
                 $request->get('password')
             ));
-            
+
             return $domainResponse->successResponse();
         } catch (ValidationException | InvalidArgumentException $exception) {
             return $this->sendError('Validation Error.', $exception->validator->errors(), 422);
@@ -97,7 +97,7 @@ class AuthController extends BaseController
             return $this->sendError('An error occurred while registering the user.', [$throwable->getMessage()], 500);
         }
     }
-    
+
     /**
      * @OA\Post(
      *     path="/api/auth/login",
@@ -128,7 +128,7 @@ class AuthController extends BaseController
                 $request->get('email'),
                 $request->get('password')
             ));
-            
+
             return $domainResponse->successResponse();
         } catch (ValidationException | InvalidArgumentException $exception) {
             return $this->sendError('Validation Error.', $exception->validator->errors(), 422);
@@ -138,7 +138,7 @@ class AuthController extends BaseController
             return $this->sendError('An error occurred while trying to login.', [$throwable->getMessage()], 500);
         }
     }
-    
+
     /**
      * @OA\Get(
      *     path="/api/auth/me",
@@ -164,5 +164,5 @@ class AuthController extends BaseController
             return $this->sendError('An error occurred while get logged user.', [$throwable->getMessage()], 500);
         }
     }
-    
+
 }

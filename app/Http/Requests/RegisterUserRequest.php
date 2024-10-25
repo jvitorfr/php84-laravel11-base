@@ -12,7 +12,7 @@ class RegisterUserRequest extends FormRequest
     {
         return true;
     }
-    
+
     public function rules(): array
     {
         return [
@@ -21,10 +21,9 @@ class RegisterUserRequest extends FormRequest
             'password' => 'required|string|min:8|confirmed:c_password',
         ];
     }
-    
+
     protected function failedValidation(Validator $validator)
     {
         throw new ValidationException($validator);
     }
 }
-

@@ -2,6 +2,7 @@
 
 namespace Domain\Contracts;
 
-interface IEmailSender {
+interface IEmailSender
+{
     public function send(string $to, string $subject, string $body, array $attachments = []): bool;
 }

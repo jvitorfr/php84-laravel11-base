@@ -12,7 +12,7 @@ class LoginUserRequest extends FormRequest
     {
         return true;
     }
-    
+
     public function rules(): array
     {
         return [
@@ -20,10 +20,9 @@ class LoginUserRequest extends FormRequest
             'password' => 'required|string|min:8',
         ];
     }
-    
+
     protected function failedValidation(Validator $validator)
     {
         throw new ValidationException($validator);
     }
 }
-
