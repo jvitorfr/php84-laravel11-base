@@ -3,12 +3,12 @@
 namespace Domain\User\UseCase\Register;
 
 use Domain\Contracts\Repositories\IUserRepository;
-use Domain\Contracts\UseCaseInterface;
+use Domain\Contracts\IUseCase;
 use Domain\DomainResponse;
 use Domain\User\Models\User;
 use InvalidArgumentException;
 
-class RegisterUserUseCase implements UseCaseInterface
+class RegisterUserUseCase implements IUseCase
 {
     private IUserRepository $repository;
 

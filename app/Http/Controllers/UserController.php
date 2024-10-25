@@ -108,7 +108,6 @@ class UserController extends BaseController
      *     )
      * )
      */
-
     public function show(string $id): JsonResponse
     {
         return $this->sendResponse($this->userRepository->find($id)->toArray(), 'Consulta realizada.');

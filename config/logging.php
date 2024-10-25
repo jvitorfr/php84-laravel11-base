@@ -1,6 +1,7 @@
 <?php
 
 use Monolog\Handler\NullHandler;
+use Monolog\Handler\SocketHandler;
 use Monolog\Handler\StreamHandler;
 use Monolog\Handler\SyslogUdpHandler;
 use Monolog\Processor\PsrLogMessageProcessor;
@@ -121,6 +122,14 @@ return [
         'null' => [
             'driver' => 'monolog',
             'handler' => NullHandler::class,
+        ],
+    
+        'logstash' => [
+            'driver' => 'monolog',
+            'handler' => SocketHandler::class,
+            'with' => [
+                'connectionString' => 'tcp://logstash:5000', // endereço do Logstash
+            ],
         ],
 
         'emergency' => [

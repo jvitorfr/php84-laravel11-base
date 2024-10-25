@@ -7,7 +7,7 @@ use Domain\DomainResponse;
 /**
  * @template TParams
  */
-interface UseCaseInterface
+interface IUseCase
 {
     /**
      * Execute the use case with specified parameters.

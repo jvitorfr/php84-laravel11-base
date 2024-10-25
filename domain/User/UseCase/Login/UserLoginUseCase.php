@@ -2,7 +2,7 @@
 
 namespace Domain\User\UseCase\Login;
 
-use Domain\Contracts\UseCaseInterface;
+use Domain\Contracts\IUseCase;
 use Domain\DomainResponse;
 use Domain\User\Models\User;
 use Exception;
@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use InvalidArgumentException;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
-class UserLoginUseCase implements UseCaseInterface
+class UserLoginUseCase implements IUseCase
 {
     public function __construct()
     {
