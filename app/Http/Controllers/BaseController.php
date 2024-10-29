@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller as Controller;
 use Illuminate\Contracts\Support\MessageBag;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Log;
 
 class BaseController extends Controller
 {
@@ -42,7 +43,20 @@ class BaseController extends Controller
         if (!empty($errorMessages)) {
             $response['data'] = $errorMessages;
         }
+        
+        $this->log($response, 'error',  $error);
 
         return response()->json($response, $code);
     }
+    
+    public function log(array $info, string $status, string $message = null): void
+    {
+        Log::channel('logstash')->info(request()->route()->uri(), [
+            'info' => $info,
+            'timestamp' => now()->toIso8601String(),
+            'status' => $status,
+            'message' => is_null($message) ? "success": $message,
+        ]);
+    }
+    
 }

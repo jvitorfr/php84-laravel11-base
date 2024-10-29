@@ -1,5 +1,6 @@
 <?php
 
+use Monolog\Formatter\JsonFormatter;
 use Monolog\Handler\NullHandler;
 use Monolog\Handler\SocketHandler;
 use Monolog\Handler\StreamHandler;
@@ -123,12 +124,16 @@ return [
             'driver' => 'monolog',
             'handler' => NullHandler::class,
         ],
-
+    
         'logstash' => [
             'driver' => 'monolog',
             'handler' => SocketHandler::class,
             'with' => [
-                'connectionString' => 'tcp://logstash:5000', // endereço do Logstash
+                'connectionString' => 'tcp://logstash:5044', // endereço do Logstash
+            ],
+            'formatter' => JsonFormatter::class,
+            'formatter_with' => [
+                'batchMode' => JsonFormatter::BATCH_MODE_NEWLINES,
             ],
         ],
 

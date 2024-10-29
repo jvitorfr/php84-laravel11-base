@@ -4,6 +4,7 @@ namespace Domain\Mail;
 
 use Domain\Contracts\IEmailSender;
 use Exception;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
 class EmailSender implements IEmailSender
@@ -24,11 +25,12 @@ class EmailSender implements IEmailSender
                 'body' => $body,
                 'subject' => $subject,
             ];
-            
+
             Mail::to($to)->send(new EmailTemplate($data, $attachments));
 
             return true;
         } catch (Exception $e) {
+            Log::info('This is a test log message!');
             return false;
         }
     }

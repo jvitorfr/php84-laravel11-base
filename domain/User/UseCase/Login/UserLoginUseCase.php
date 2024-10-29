@@ -25,7 +25,6 @@ class UserLoginUseCase implements IUseCase
      */
     public function execute(...$params): DomainResponse
     {
-
         if (count($params) !== 1 || !($params[0] instanceof LoginUserParams)) {
             throw new InvalidArgumentException('Invalid parameters provided.');
         }
