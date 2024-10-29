@@ -5,32 +5,24 @@ namespace App\Exceptions;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\HttpException;
 use Throwable;
 
 class Handler extends ExceptionHandler
 {
-    
-    public function report(Throwable $exception)
+    public function report(Throwable $e): void
     {
         Log::channel('logstash')->error('Unhandled Exception', [
             'route' => request()->route()->uri() ?? '',
-            'message' => $exception->getMessage(),
-            'stack' => $exception->getTraceAsString(),
-            'file' => $exception->getFile(),
-            'line' => $exception->getLine(),
+            'message' => $e->getMessage(),
+            'stack' => $e->getTraceAsString(),
+            'file' => $e->getFile(),
+            'line' => $e->getLine(),
         ]);
-        
-        
-        parent::report($exception);
+        parent::report($e);
     }
-    
-    public function render($request, Throwable $exception): Response
+
+    public function render($request, Throwable $e): Response
     {
-        return response()->json([
-            'error' => 'Ocorreu um erro inesperado.'
-        ], 500);
-    
-        return parent::render($request, $exception);
+        return parent::render($request, $e);
     }
 }

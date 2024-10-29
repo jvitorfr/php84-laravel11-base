@@ -124,7 +124,7 @@ return [
             'driver' => 'monolog',
             'handler' => NullHandler::class,
         ],
-    
+
         'logstash' => [
             'driver' => 'monolog',
             'handler' => SocketHandler::class,
