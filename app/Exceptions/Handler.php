@@ -11,7 +11,7 @@ class Handler extends ExceptionHandler
 {
     public function report(Throwable $e): void
     {
-        $uri =  request()->route()->uri();
+        $uri = request()->route()->uri();
         Log::channel('logstash')->error('Unhandled Exception', [
             'route' => empty($uri) ? 'N/A' : $uri,
             'message' => $e->getMessage(),
