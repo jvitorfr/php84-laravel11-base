@@ -35,6 +35,7 @@ RUN mkdir -p /var/log/supervisor /var/log/php-fpm && \
 
 COPY ./docker/supervisord.conf /etc/supervisor/supervisord.conf
 COPY ./docker/queue-worker.conf /etc/supervisor/conf.d/queue-worker.conf
+COPY ./docker/checkin-worker.conf /etc/supervisor/conf.d/checkin-worker.conf
 
 RUN chown -R joao:joao /etc/supervisor/conf.d/ \
     && chown joao:joao /etc/supervisor/supervisord.conf
