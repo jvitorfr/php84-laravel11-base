@@ -8,6 +8,7 @@ services:
       context: ./
       dockerfile: Dockerfile
     image: laravel-app
+    command: supervisord -c /etc/supervisor/supervisord.conf
     restart: unless-stopped
     working_dir: /var/www/
     volumes:
