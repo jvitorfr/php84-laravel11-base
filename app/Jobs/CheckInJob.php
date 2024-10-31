@@ -8,6 +8,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
+use Swoole\Coroutine;
 
 class CheckInJob implements ShouldQueue
 {
@@ -22,17 +23,16 @@ class CheckInJob implements ShouldQueue
 
     public function handle(): void
     {
-        Log::channel('logstash')->info('CheckInJob is being processed.', [
+        Log::channel('logstash')->info('start 1111111.', [
             'data' => $this->checkInData,
             'job_id' => $this->job->getJobId(),
             'status' => 'started',
             'timestamp' => now()->toIso8601String(),
         ]);
-        
-        
-        sleep(5);
+    
+        sleep(4);
 
-        Log::channel('logstash')->info('CheckInJob has been completed.', [
+        Log::channel('logstash')->info('end 2222.', [
             'job_id' => $this->job->getJobId(),
             'status' => 'completed',
             'timestamp' => now()->toIso8601String(),

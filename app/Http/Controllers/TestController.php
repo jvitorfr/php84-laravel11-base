@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Jobs\CheckInJob;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Log;
+use Swoole\Coroutine as Co;
 
 class TestController extends BaseController
 {
@@ -13,32 +13,55 @@ class TestController extends BaseController
         $data = [
             'message' => 'Dados retornados com sucesso'
         ];
-
+        
         return response()->json($data);
     }
-
+    
     public function testPreCommit(): JsonResponse
     {
         $data = [
             'message' => 'Dados retornados com sucesso'
         ];
-
+        
         return response()->json($data);
     }
     
     public function testCheckinJob(): JsonResponse
     {
-        $checkInData = [
-            'user_id' => 123,
-            'location' => 'Exemplo de Local',
-            'timestamp' => now()->toIso8601String(),
-        ];
+        $this->testCoroutines();
+        return response()->json(['message' => 'Job is being processed asynchronously.']);
         
-//        CheckInJob::dispatch($checkInData)->onQueue('checkins')->delay(now()->addMinutes(1));
-       CheckInJob::dispatch($checkInData)->onQueue('checkins');
-       //dispatch(new CheckInJob($checkInData))->onQueue('checkins');
-      // CheckInJob::dispatch($checkInData)->delay(now()->addMinutes(1));
-
-        return response()->json(['message' => 'test job checkin']);
     }
+    
+    function testCoroutines()
+    {
+        go(function () {
+            Co::sleep(5);
+            Log::channel('logstash')->info('go 1.', [
+                'job_id' => 1,
+                'status' => 'completed',
+                'timestamp' => now()->toIso8601String(),
+            ]);
+        });
+        
+        go(function () {
+            Co::sleep(5);
+            Log::channel('logstash')->info('go 2.', [
+                'job_id' => 2,
+                'status' => 'completed',
+                'timestamp' => now()->toIso8601String(),
+            ]);
+        });
+    
+    
+        go(function () {
+            Co::sleep(2);
+            Log::channel('logstash')->info('go 3 sempre antes.', [
+                'job_id' => 3,
+                'status' => 'completed',
+                'timestamp' => now()->toIso8601String(),
+            ]);
+        });
+    }
+    
 }

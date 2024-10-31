@@ -1,4 +1,3 @@
-#FROM php:8.4-rc-fpm
 FROM php:8.3
 
 # Argumentos para o usuário
@@ -24,6 +23,9 @@ RUN apt-get update && apt-get install -y \
 # Instalação de extensões do PHP
 RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd sockets
 
+# Remover instalação anterior da Swoole, se houver
+RUN pecl uninstall swoole || true
+
 # Instalação do Swoole via PECL
 RUN pecl install swoole && \
     docker-php-ext-enable swoole
@@ -40,7 +42,6 @@ RUN useradd -G www-data,root -u $uid -d /home/$user $user && \
 RUN mkdir -p /var/log/supervisor /var/log/php-fpm && \
     touch /var/log/php-fpm.log /var/log/php-fpm.error.log && \
     chown www-data:www-data /var/log/php-fpm.log /var/log/php-fpm.error.log
-
 
 COPY ./docker/supervisord.conf /etc/supervisor/supervisord.conf
 COPY ./docker/queue-worker.conf /etc/supervisor/conf.d/queue-worker.conf

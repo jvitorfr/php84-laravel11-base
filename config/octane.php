@@ -12,13 +12,10 @@ use Laravel\Octane\Events\WorkerErrorOccurred;
 use Laravel\Octane\Events\WorkerStarting;
 use Laravel\Octane\Events\WorkerStopping;
 use Laravel\Octane\Listeners\CloseMonologHandlers;
-use Laravel\Octane\Listeners\CollectGarbage;
-use Laravel\Octane\Listeners\DisconnectFromDatabases;
 use Laravel\Octane\Listeners\EnsureUploadedFilesAreValid;
 use Laravel\Octane\Listeners\EnsureUploadedFilesCanBeMoved;
 use Laravel\Octane\Listeners\FlushOnce;
 use Laravel\Octane\Listeners\FlushTemporaryContainerInstances;
-use Laravel\Octane\Listeners\FlushUploadedFiles;
 use Laravel\Octane\Listeners\ReportException;
 use Laravel\Octane\Listeners\StopWorkerIfNecessary;
 use Laravel\Octane\Octane;
@@ -220,5 +217,22 @@ return [
     */
 
     'max_execution_time' => 30,
-
+    
+    'swoole' => [
+        'enable_coroutine' => true,
+        'daemonize' => false,
+        'log_file' => '/var/www/storage/logs/swoole_http.log',
+        'log_level' => 2,
+        'max_request' => 500,
+        'package_max_length' => 10485760,
+        'reactor_num' => 3,
+        'send_yield' => true,
+        'socket_buffer_size' => 10485760,
+        'task_max_request' => 500,
+        'task_worker_num' => 8,
+        'worker_num' => 3,
+    ],
+    'queue' => [
+        'default' => env('QUEUE_CONNECTION', 'sync'),
+    ],
 ];

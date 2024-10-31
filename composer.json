@@ -8,7 +8,7 @@
         "php": "^8.2",
         "doctrine/annotations": "^2.0",
         "laravel/framework": "^11.9",
-        "laravel/octane": "^2.5",
+        "laravel/octane": "*",
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.9",
         "swagger-api/swagger-ui": "^5.17",
