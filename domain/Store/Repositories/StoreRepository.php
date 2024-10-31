@@ -4,7 +4,7 @@ namespace Domain\Store\Repositories;
 
 use Domain\BaseRepository;
 use Domain\Contracts\Repositories\IStoreRepository;
-use Domain\User\Models\Store;
+use Domain\Store\Models\Store;
 
 class StoreRepository extends BaseRepository implements IStoreRepository
 {
