@@ -28,14 +28,16 @@ class TestController extends BaseController
     
     public function testCheckinJob(): JsonResponse
     {
-        $checkInData = serialize([
-            'user_id' => 1,
-            'location' => 'location',
-            'timestamp' => now(),
-        ]);
+        $checkInData = [
+            'user_id' => 123,
+            'location' => 'Exemplo de Local',
+            'timestamp' => now()->toIso8601String(),
+        ];
         
-       // CheckInJob::dispatch($checkInData)->onQueue('checkins')->delay(now()->addMinutes(1));
-       CheckInJob::dispatch()->onQueue('checkins');
+//        CheckInJob::dispatch($checkInData)->onQueue('checkins')->delay(now()->addMinutes(1));
+       CheckInJob::dispatch($checkInData)->onQueue('checkins');
+       //dispatch(new CheckInJob($checkInData))->onQueue('checkins');
+      // CheckInJob::dispatch($checkInData)->delay(now()->addMinutes(1));
 
         return response()->json(['message' => 'test job checkin']);
     }

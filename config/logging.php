@@ -131,7 +131,7 @@ return [
             'with' => [
                 'connectionString' => 'tcp://logstash:5044', // endereço do Logstash
             ],
-            'formatter' => JsonFormatter::class,
+            'formatter' => Monolog\Formatter\JsonFormatter::class,
             'formatter_with' => [
                 'batchMode' => JsonFormatter::BATCH_MODE_NEWLINES,
             ],
